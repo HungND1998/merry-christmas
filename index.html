@@ -179,6 +179,13 @@
 
 
 
+    <audio id="audioElement" autoplay hidden loop src="./christmas-background-music.mp3">
+        <source src="./static/christmas-background-music.mp3" type="audio/mpeg">
+                  unsupported !! 
+    </audio>    
+
+
+
 
     <script src="./gsap.min.js"></script>
     <script src="./MorphSVGPlugin3.min.js"></script>
@@ -346,18 +353,14 @@
     </script>
 
   <script>
-    // const textContainer = document.querySelector('.text-container');
-    // const spans = textContainer.querySelectorAll('span');
-
-    // spans.forEach((span, index) => {
-    //   span.addEventListener('animationend', () => {
-    //     spans.forEach((s, i) => {
-    //       if (i < index) {
-    //         s.style.transform = 'scale(1)';
-    //       }
-    //     });
-    //   });
-    // });
+document.addEventListener('click', function() {
+    const audio = document.getElementById('audioElement');
+    if (audio.paused) {
+		audio.muted = false;
+		audio.volume = 0.25;
+      	audio.play();
+    }
+}, { once: true });  // chỉ kích hoạt một lần, khi có tương tác đầu tiên
   </script>
 
 </body>
