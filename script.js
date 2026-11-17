@@ -12,14 +12,19 @@ const insideGreeting = `Merry Christmas ${recipientName}! Mùa đông đến r�
 // Cập nhật tiêu đề trang
 document.title = `Merry Christmas - ${recipientName}!`;
 
-// Cá nhân hóa các tiêu đề
+// Cá nhân hóa các tiêu đề và nội dung
 function applyPersonalizedTitles() {
     const giftTitle = document.getElementById('giftModalTitle');
     const certTitle = document.getElementById('santaCertTitle');
+    const certBody = document.getElementById('santaCertBody');
     const loveLetterTitle = document.getElementById('loveLetterTitle');
+    const snowmanBubble = document.getElementById('snowmanBubble');
+
     if (giftTitle) giftTitle.textContent = `Món Quà Dành Riêng Cho ${recipientName}!`;
     if (certTitle) certTitle.textContent = `Chứng Nhận ${recipientName} Đáng Yêu Nhất!`;
+    if (certBody) certBody.textContent = `Ông già Noel xác nhận ${recipientName} đã xuất sắc bắt đủ 5 món quà may mắn và xứng đáng nhận được 1000 cái ôm ấm áp cùng mọi điều ngọt ngào nhất trong mùa đông này! ❤️🎄`;
     if (loveLetterTitle) loveLetterTitle.textContent = `💌 Gửi ${recipientName} Mùa Giáng Sinh 🎄`;
+    if (snowmanBubble) snowmanBubble.textContent = `Chào ${recipientName}! Bấm vào tớ để nhận thông điệp Giáng sinh nha ⛄✨`;
 }
 applyPersonalizedTitles();
 window.addEventListener('DOMContentLoaded', applyPersonalizedTitles);
@@ -793,6 +798,10 @@ function viewCard() {
         textOutsideCard.style.pointerEvents = 'none';
     }
 
+    if (typeof isFogActive !== 'undefined' && isFogActive && typeof closeFoggyGlass === 'function') {
+        closeFoggyGlass();
+    }
+
     playMagicChime();
     spawnCelebrationBurst(window.innerWidth / 2, window.innerHeight * 0.38, 26);
 
@@ -926,12 +935,12 @@ function cyclePolaroid() {
 
 // 17. Người Tuyết Tương Tác
 const snowmanQuotes = [
-    'Trời lạnh rồi, nhớ mặc ấm và nhớ đến người gửi thiệp nha! 🧣❤️',
-    'Ông già Noel bảo năm nay đằng ấy chính là món quà tuyệt nhất! 🎁✨',
-    'Đông này vẫn giống đông xưa, vẫn đi xe máy, vẫn thừa yên sau! ⛄💖',
-    'Bấm vào tớ là cả năm tới gặp toàn may mắn và niềm vui đó nha! 🍀❄️',
-    'Chúc đằng ấy một mùa Giáng sinh ngọt ngào hơn cả kẹo gậy! 🍬🎄',
-    'Nhớ mở thiệp và bấm vào hộp quà bí mật để nhận vé hẹn hò nhé! 🎟️❤️'
+    `Trời lạnh rồi, ${recipientName} nhớ mặc áo ấm và giữ gìn sức khỏe nha! 🧣❤️`,
+    `Ông già Noel bảo năm nay ${recipientName} chính là món quà tuyệt vời nhất! 🎁✨`,
+    `Đông này vẫn giống đông xưa, vẫn đi xe máy, vẫn thừa yên sau! ⛄💖`,
+    `Bấm vào tớ là cả năm tới gặp toàn may mắn và niềm vui đó nha! 🍀❄️`,
+    `Chúc ${recipientName} một mùa Giáng sinh ngọt ngào hơn cả kẹo gậy! 🍬🎄`,
+    `Nhớ mở thiệp và bấm vào hộp quà bí mật để nhận vé hẹn hò nhé! 🎟️❤️`
 ];
 let snowmanQuoteIdx = 0;
 let snowmanBubbleTimer = null;
