@@ -7,10 +7,9 @@
     <link rel="apple-touch-icon" href="./favicon.ico" type="image/png" sizes="180x180"/>
     <link rel="icon" href="./favicon.ico" type="image/png" sizes="32x32"/>
     <link rel="icon" href="./favicon.ico" type="image/x-icon" sizes="16x16"/>
-    <title>Merry Christmas!</title>
-    <script src="./script.js"></script>
+    <title>Merry Christmas - Thạch Phan!</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>    
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?v=11">
 </head>
 
 <body translate="no">
@@ -20,32 +19,252 @@
         <p>Hoặc MB bank: 0329905386</p>
     </div> -->
 
+    <!-- Cực quang Bắc Cực lung linh trên bầu trời đêm -->
+    <div class="aurora-bg" aria-hidden="true"></div>
 
+    <!-- Cửa sổ đọng sương & Lau kính mùa đông (Foggy Frosted Glass) -->
+    <canvas id="foggyGlassCanvas" class="foggy-glass-canvas is-active"></canvas>
+    <div class="fog-hint-badge is-visible" id="fogHintBadge">
+        <span>👆</span> Dùng chuột hoặc ngón tay lau lớp sương mờ trên kính nhé! ❄️
+    </div>
+    <div class="fog-actions-bar is-visible" id="fogActionsBar">
+        <button class="fog-action-btn" onclick="refrostGlass(event)">🔄 Phủ sương lại</button>
+        <button class="fog-action-btn" onclick="clearFogGlass(event)">✨ Lau sạch hết</button>
+        <button class="fog-action-btn close" onclick="closeFoggyGlass(event)">✖ Đóng</button>
+    </div>
 
-    <button class="view-card-btn" onclick="viewCard()">Nhấn vào để xem =))</button>
-    
+    <!-- Dây đèn LED Giáng sinh -->
+    <ul class="christmas-lights" aria-hidden="true">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li>
+    </ul>
 
+    <!-- Ông già Noel cưỡi tuần lộc bay ngang bầu trời -->
+    <div class="santa-sleigh" aria-hidden="true">
+        <svg viewBox="0 0 360 110" xmlns="http://www.w3.org/2000/svg">
+            <!-- Bụi phép thuật lấp lánh phía sau -->
+            <circle cx="18" cy="68" r="2.5" fill="#ffd166" opacity="0.8"/>
+            <circle cx="34" cy="74" r="1.8" fill="#fff" opacity="0.7"/>
+            <circle cx="48" cy="62" r="2.2" fill="#ffd166" opacity="0.85"/>
+            <circle cx="65" cy="72" r="1.5" fill="#fff" opacity="0.75"/>
+            <!-- Cỗ xe trượt tuyết -->
+            <path d="M68 82 C60 82, 55 76, 58 70 L62 70 C60 75, 64 78, 70 78 L155 78 C165 78, 172 72, 175 64 L179 65 C175 75, 166 82, 155 82 Z" fill="#ffd166"/>
+            <line x1="88" y1="68" x2="88" y2="78" stroke="#ffd166" stroke-width="3"/>
+            <line x1="138" y1="68" x2="138" y2="78" stroke="#ffd166" stroke-width="3"/>
+            <path d="M72 68 L148 68 C156 68, 162 56, 166 46 L142 46 C135 55, 118 55, 110 46 L76 46 C68 52, 68 62, 72 68 Z" fill="#d62828" stroke="#ffd166" stroke-width="1.5"/>
+            <!-- Túi quà trên xe -->
+            <circle cx="92" cy="42" r="13" fill="#2a9d8f"/>
+            <rect x="84" y="28" width="14" height="10" rx="2" fill="#f4a261"/>
+            <!-- Ông già Noel -->
+            <circle cx="122" cy="34" r="8" fill="#ffcdb2"/>
+            <path d="M115 36 C115 44, 130 44, 130 36 Z" fill="#ffffff"/>
+            <path d="M114 30 C118 20, 128 22, 132 30 Z" fill="#e63946"/>
+            <circle cx="133" cy="28" r="3" fill="#ffffff"/>
+            <path d="M112 46 C114 38, 130 38, 132 46 Z" fill="#e63946"/>
+            <!-- Dây cương nối tuần lộc -->
+            <path d="M164 52 Q210 60 250 48 Q285 55 322 45" fill="none" stroke="#ffd166" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <!-- Tuần lộc 1 -->
+            <g transform="translate(215, 28)">
+                <ellipse cx="28" cy="26" rx="16" ry="8" fill="#bc6c25"/>
+                <path d="M38 22 L46 10 L54 13 L44 25 Z" fill="#bc6c25"/>
+                <ellipse cx="52" cy="12" rx="6" ry="4" fill="#bc6c25"/>
+                <circle cx="57" cy="11" r="2" fill="#333"/>
+                <path d="M46 9 L43 1 M46 5 L49 2 M49 9 L52 1" stroke="#dda15e" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 31 L8 44 M22 32 L18 45 M36 32 L42 45 M40 30 L50 41" stroke="#9c5218" stroke-width="2.8" stroke-linecap="round"/>
+                <circle cx="12" cy="24" r="3" fill="#fff"/>
+            </g>
+            <!-- Tuần lộc dẫn đầu (Rudolph mũi đỏ) -->
+            <g transform="translate(285, 22)">
+                <ellipse cx="28" cy="26" rx="16" ry="8" fill="#bc6c25"/>
+                <path d="M38 22 L46 10 L54 13 L44 25 Z" fill="#bc6c25"/>
+                <ellipse cx="52" cy="12" rx="6" ry="4" fill="#bc6c25"/>
+                <circle cx="58" cy="12" r="3" fill="#ff2a2a"/>
+                <path d="M46 9 L43 1 M46 5 L49 2 M49 9 L52 1" stroke="#dda15e" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 31 L8 44 M22 32 L18 45 M36 32 L42 45 M40 30 L50 41" stroke="#9c5218" stroke-width="2.8" stroke-linecap="round"/>
+                <circle cx="12" cy="24" r="3" fill="#fff"/>
+            </g>
+        </svg>
+    </div>
 
-    <div class="wrapper-card">
-        <div class="card">
-            <div class="outside">
-            <div class="front">
-                <p>Merry Christmas!</p>
-                <!-- <div class="cake">
-                <div class="top-layer"></div>
-                <div class="middle-layer"></div>
-                <div class="bottom-layer"></div>
-                <div class="candle"></div>
-                </div> -->
-                <img class="christmas-image" src="./christmas.jpg" alt=""/>
+    <!-- Đồng hồ đếm ngược Giáng sinh & Nút bật/tắt nhạc -->
+    <div class="countdown-badge" id="countdownBadge">
+        <span>🎄 Noel:</span>
+        <span class="countdown-time" id="countdownTimer">Đang tính...</span>
+    </div>
+
+    <!-- Thanh nút phụ góc trên trái: Pháo hoa/Đổi màu & Tích điểm bắt quà -->
+    <div class="sub-top-left-bar">
+        <button class="mini-action-pill" onclick="triggerStarFireworksAndTheme(event)" title="Bấm vào đây hoặc ngôi sao trên đỉnh cây thông">
+            <span>🎆</span>
+            <span id="themePillText">Pháo hoa & Đổi màu</span>
+        </button>
+        <button class="mini-action-pill" id="catchScorePill" onclick="handleCatchPillClick(event)" title="Bấm vào tất hoặc kẹo gậy đang rơi để tích điểm!">
+            <span>🧦</span>
+            <span id="catchScoreText">Bắt quà rơi: 0/5</span>
+        </button>
+        <button class="mini-action-pill" id="fogToggleBtn" onclick="toggleFoggyGlass(event)" title="Bật/tắt chế độ lau kính đọng sương mùa đông">
+            <span>❄️</span>
+            <span id="fogPillText">Lau kính đọng sương</span>
+        </button>
+    </div>
+
+    <!-- Hộp Nhạc Đĩa Than Cổ Điển Góc Trên Phải (Vintage Vinyl Music Player) -->
+    <div class="music-player-widget" id="musicPlayerWidget">
+        <button class="music-vinyl-btn" id="musicToggleBtn" onclick="toggleMusic(event)" title="Bật / Tạm dừng nhạc Giáng sinh">
+            <div class="vinyl-disc-wrap">
+                <div class="vinyl-disc" id="vinylDisc">
+                    <div class="vinyl-groove"></div>
+                    <div class="vinyl-center-sticker">🎄</div>
+                </div>
+                <div class="vinyl-tonearm" id="vinylTonearm">
+                    <span class="tonearm-pivot"></span>
+                    <span class="tonearm-rod"></span>
+                    <span class="tonearm-head"></span>
+                </div>
             </div>
-            <div class="back">
-                <img class="love-image" src="./heart.svg" alt=""/>
+            <div class="music-info-wrap">
+                <span class="music-track-title">Merry Christmas 🎶</span>
+                <div class="music-status-row">
+                    <span class="music-status-text" id="musicLabel">Bật nhạc</span>
+                    <div class="audio-equalizer" id="audioEqualizer" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
             </div>
-            </div>
-            <div class="inside">
+        </button>
+        <!-- Thanh chỉnh âm lượng tinh tế -->
+        <div class="music-volume-panel" id="musicVolumePanel">
+            <button class="vol-btn" id="volMuteBtn" onclick="toggleMute(event)" title="Tắt / Mở tiếng">
+                <span id="volIcon">🔉</span>
+            </button>
+            <input type="range" class="vol-slider" id="volumeSlider" min="0" max="1" step="0.05" value="0.25" oninput="changeVolume(this.value, event)" title="Chỉnh âm lượng" />
+        </div>
+    </div>
+
+    <button class="view-card-btn" onclick="viewCard()">💌 Mở Kỷ Niệm &amp; Lời Chúc ✨</button>
+    <button class="back-tree-btn" id="backTreeBtn" onclick="backToTree()">🎄 Quay lại ngắm cây thông</button>
+
+    <!-- Không gian Dây Đèn Vàng Kẹp 10 Ảnh Polaroid Đung Đưa + Bức Thư Giáng Sinh -->
+    <div class="memories-stage" id="memoriesStage">
+        <div class="polaroid-string-wall">
+            <div class="polaroid-row" id="polaroidRow1"></div>
+            <div class="polaroid-row" id="polaroidRow2"></div>
+        </div>
+
+        <div class="love-letter-card">
+            <p class="love-letter-title" id="loveLetterTitle">💌 Gửi Thạch Phan Mùa Giáng Sinh 🎄</p>
             <p class="text-container text-inside-card"></p>
-            
+            <div class="love-letter-actions">
+                <button class="slideshow-toggle-btn" id="slideshowToggleBtn" onclick="togglePhotoSlideshow(event)">▶️ Chạy Slideshow Kỷ Niệm</button>
+                <button class="gift-box-btn" onclick="openGiftModal(event)">🎁 Mở hộp quà bí mật</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hộp quà bí mật (kèm khung ảnh kỷ niệm Polaroid & bốc thăm quà tặng) -->
+    <div class="gift-modal-overlay" id="giftModalOverlay" onclick="closeGiftModal(event)">
+        <div class="gift-modal" onclick="event.stopPropagation()">
+            <div class="polaroid-frame" onclick="cyclePolaroid()" title="Nhấn vào ảnh để xem 10 tấm ảnh kỷ niệm của hai đứa">
+                <img id="polaroidImg" src="./photos/photo1.jpg" alt="Kỷ niệm Giáng sinh"/>
+                <div class="polaroid-caption" id="polaroidCaption">Kỷ niệm #1 ❤️ (Bấm để đổi ảnh)</div>
+            </div>
+            <h3 id="giftModalTitle">Món Quà Giáng Sinh Đặc Biệt!</h3>
+            <p id="giftModalDesc">Chúc em một mùa Giáng sinh ngập tràn niềm vui, tiếng cười và luôn ấm áp bên những người thương yêu nhất! ❤️</p>
+            <div class="gift-voucher" id="giftVoucherText">
+                🎟️ 1 Vé đi ăn đồ nướng / trà sữa nóng bất kỳ lúc nào em muốn!
+            </div>
+            <div class="gift-actions">
+                <button class="gift-shuffle-btn" onclick="shuffleGiftVoucher()">🎲 Đổi quà khác</button>
+                <button class="gift-close-btn" onclick="closeGiftModal()">Nhận quà ngay 💖</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Xem Ảnh Kỷ Niệm Phóng To (khi bấm vào 10 Quả Châu trên cây thông hoặc Quả Cầu Pha Lê) -->
+    <div class="gift-modal-overlay" id="photoLightboxOverlay" onclick="closePhotoLightbox(event)">
+        <div class="photo-lightbox-card" onclick="event.stopPropagation()">
+            <div class="lightbox-badge" id="lightboxBadge">🎄 Quả châu kỷ niệm #1 / 10</div>
+            <div class="lightbox-img-wrap">
+                <button class="lightbox-nav-btn prev" onclick="stepPhotoLightbox(-1)" title="Ảnh trước">❮</button>
+                <img id="lightboxImg" src="./photos/photo1.jpg" alt="Ảnh đôi kỷ niệm" />
+                <button class="lightbox-nav-btn next" onclick="stepPhotoLightbox(1)" title="Ảnh tiếp theo">❯</button>
+            </div>
+            <p class="lightbox-caption" id="lightboxCaption">Khoảnh khắc bình yên và ngọt ngào nhất là khi có em bên cạnh ❤️</p>
+            <div class="gift-actions">
+                <button class="gift-shuffle-btn" onclick="stepPhotoLightbox(1)">📸 Xem ảnh tiếp theo</button>
+                <button class="gift-close-btn" onclick="closePhotoLightbox()">Đóng lại 💖</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chứng Nhận Đặc Biệt từ Ông Già Noel (khi bắt đủ 5 món quà rơi) -->
+    <div class="gift-modal-overlay" id="santaCertOverlay" onclick="closeSantaCertModal(event)">
+        <div class="gift-modal" onclick="event.stopPropagation()">
+            <div class="gift-modal-icon">🎅📜</div>
+            <div class="cert-seal">⭐ CHỨNG NHẬN ĐẶC BIỆT ĐÊM NOEL ⭐</div>
+            <h3 id="santaCertTitle">Danh Sách Bé Ngoan & Đáng Yêu Nhất!</h3>
+            <p id="santaCertBody">Ông già Noel xác nhận đằng ấy đã xuất sắc bắt đủ 5 món quà may mắn và xứng đáng nhận được 1000 cái ôm ấm áp cùng mọi điều ngọt ngào nhất trong mùa đông này! ❤️🎄</p>
+            <div class="gift-voucher">
+                👑 Đặc quyền: Được chiều chuộng vô điều kiện suốt 365 ngày tới!
+            </div>
+            <button class="gift-close-btn" onclick="closeSantaCertModal()">Yêu thương ngập tràn 💖</button>
+        </div>
+    </div>
+
+    <!-- Người tuyết tương tác ở góc dưới trái -->
+    <div class="snowman-widget">
+        <button class="snowman-btn" id="snowmanBtn" onclick="pokeSnowman(event)" title="Bấm vào tớ đi!">
+            <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Tay cành cây -->
+                <path d="M22 65 L4 48 M8 52 L3 58" stroke="#6c3c18" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M78 65 L96 46 M91 51 L97 56" stroke="#6c3c18" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Thân người tuyết -->
+                <circle cx="50" cy="86" r="28" fill="#ffffff" stroke="#dce8f2" stroke-width="2"/>
+                <circle cx="50" cy="48" r="21" fill="#ffffff" stroke="#dce8f2" stroke-width="2"/>
+                <!-- Khăn choàng đỏ -->
+                <path d="M32 62 Q50 70 68 62 L66 70 Q50 77 34 70 Z" fill="#e63946"/>
+                <path d="M56 66 L62 92 L52 90 L50 67 Z" fill="#d62828"/>
+                <!-- Cúc áo -->
+                <circle cx="46" cy="78" r="2.8" fill="#2b2d42"/>
+                <circle cx="46" cy="90" r="2.8" fill="#2b2d42"/>
+                <!-- Mắt & miệng cười & má hồng -->
+                <circle cx="42" cy="43" r="2.6" fill="#1d1d2e"/>
+                <circle cx="58" cy="43" r="2.6" fill="#1d1d2e"/>
+                <ellipse cx="36" cy="49" rx="3.8" ry="2.2" fill="#ff8fa3" opacity="0.65"/>
+                <ellipse cx="64" cy="49" rx="3.8" ry="2.2" fill="#ff8fa3" opacity="0.65"/>
+                <!-- Mũi cà rốt -->
+                <polygon points="49,45 64,49 49,51" fill="#f77f00"/>
+                <path d="M42 54 Q50 60 58 54" fill="none" stroke="#1d1d2e" stroke-width="2.2" stroke-linecap="round"/>
+                <!-- Mũ Noel -->
+                <path d="M30 33 Q50 26 70 33" stroke="#ffffff" stroke-width="7" stroke-linecap="round" fill="none"/>
+                <path d="M33 30 C38 10, 62 8, 74 26 L67 31 Z" fill="#e63946"/>
+                <circle cx="75" cy="26" r="5.5" fill="#ffffff"/>
+            </svg>
+        </button>
+        <div class="snowman-bubble" id="snowmanBubble">Chào đằng ấy! Bấm vào tớ để nhận thông điệp Giáng sinh nha ⛄✨</div>
+    </div>
+
+    <!-- Nút & Modal Gửi điều ước Giáng sinh lên bầu trời -->
+    <button class="wish-trigger-btn" onclick="openWishModal(event)">
+        <span>🌠</span>
+        <span>Gửi điều ước</span>
+    </button>
+
+    <div class="gift-modal-overlay" id="wishModalOverlay" onclick="closeWishModal(event)">
+        <div class="gift-modal" onclick="event.stopPropagation()">
+            <div class="gift-modal-icon">🌠</div>
+            <h3>Điều Ước Đêm Giáng Sinh</h3>
+            <p>Hãy viết điều ước của bạn và thả đèn sao bay lên bầu trời đêm Noel nhé!</p>
+            <input type="text" id="wishInput" class="wish-input" placeholder="Nhập điều ước của bạn..." maxlength="220" onkeydown="if(event.key==='Enter') sendSkyWish()" />
+            <div class="wish-presets">
+                <button type="button" class="wish-preset-chip" onclick="fillWishPreset('Luôn vui vẻ, bình an & hạnh phúc ❤️')">Bình an & hạnh phúc ❤️</button>
+                <button type="button" class="wish-preset-chip" onclick="fillWishPreset('Mùa đông này luôn có người thương bên cạnh 🧣')">Có người thương bên cạnh 🧣</button>
+                <button type="button" class="wish-preset-chip" onclick="fillWishPreset('Mọi dự định năm mới đều rực rỡ ✨')">Năm mới rực rỡ ✨</button>
+            </div>
+            <div class="gift-actions">
+                <button class="gift-close-btn" onclick="sendSkyWish()">Thả điều ước lên trời ✨</button>
             </div>
         </div>
     </div>
@@ -114,6 +333,24 @@
 
             </filter>
 
+            <clipPath id="ornamentPhotoClip">
+                <circle cx="0" cy="0" r="18.5"></circle>
+            </clipPath>
+
+            <!-- Gradient phát sáng rực rỡ cho Ngôi sao đỉnh cây thông -->
+            <radialGradient id="starRadialGrad" cx="45%" cy="45%" r="60%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="25%" stop-color="#fff8b5" />
+                <stop offset="65%" stop-color="#ffd166" />
+                <stop offset="100%" stop-color="#f77f00" />
+            </radialGradient>
+            <radialGradient id="starAuraGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+                <stop offset="30%" stop-color="#ffe066" stop-opacity="0.8" />
+                <stop offset="65%" stop-color="#ffd166" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#ffd166" stop-opacity="0" />
+            </radialGradient>
+
         </defs>
         <g class="whole">
 
@@ -143,49 +380,29 @@
             <path class="treePot" mask="url(#treePotMask)"
                 d="M374.32,502.55a48.15,48.15,0,0,0,1.24,14.35c1.15,4.52,3.29,8.64,6.49,11.35a18.5,18.5,0,0,0,5.51,3.14,39.06,39.06,0,0,0,6.41,1.82,65.78,65.78,0,0,0,13.68,1.12,72.9,72.9,0,0,0,13.72-1.44,44.51,44.51,0,0,0,6.46-1.85,17.75,17.75,0,0,0,5.51-3.15,25.45,25.45,0,0,0,7.24-11.17,52,52,0,0,0,1.9-6.91c.48-2.37.83-4.8,1.18-7.25a55.16,55.16,0,0,1,.64,7.42,40.11,40.11,0,0,1-.52,7.56,31.23,31.23,0,0,1-2.19,7.5,24.37,24.37,0,0,1-4.46,6.79,25.16,25.16,0,0,1-6.61,5,39.72,39.72,0,0,1-7.4,3A58.55,58.55,0,0,1,407.75,542a55,55,0,0,1-15.47-1.9,36.65,36.65,0,0,1-7.46-3,25.3,25.3,0,0,1-6.6-5,19.63,19.63,0,0,1-2.5-3.34,21.72,21.72,0,0,1-1.79-3.67,27.66,27.66,0,0,1-1.65-7.7,38.16,38.16,0,0,1,2-14.87Z"
                 fill="#cb9866"></path>
-            <g class="treeStar" data-svg-origin="407.94639587402344 65.8066291809082" transform="matrix(1,0,0,1,0,0)"
+            <g class="treeStar" onclick="triggerStarFireworksAndTheme(event)" data-svg-origin="407.94639587402344 65.8066291809082" transform="matrix(1,0,0,1,0,0)"
                 style="transform-origin: 0px 0px; translate: none; rotate: none; scale: none;">
+                <title>Bấm vào ngôi sao để bắn pháo hoa &amp; đổi màu cây thông!</title>
+                <!-- Hào quang phát sáng tỏa rộng của Ngôi sao -->
+                <circle class="star-halo" cx="408" cy="66" r="48" fill="url(#starAuraGrad)"></circle>
                 <path class="treeStarOutline" opacity="0"
                     d="M421,53.27c5,.83,10.08,1.52,15.15,2.13l3.8.45,1.9.21c.33,0,.6.06,1,.12a2.41,2.41,0,0,1,1.27.66,2.52,2.52,0,0,1,.56,2.76,3.42,3.42,0,0,1-.78,1.07l-.66.69-2.65,2.77c-1.78,1.83-3.54,3.68-5.35,5.48l-2.7,2.71L429.81,75l-.69.67-.34.33,0,0h0a.14.14,0,0,0,0-.08s0-.07,0,0l0,.24.07.47.57,3.78c.4,2.52.71,5,1.06,7.57l.94,7.59.22,1.9c0,.06,0,.19,0,.34a2.21,2.21,0,0,1,0,.43,2.72,2.72,0,0,1-.21.84,2.85,2.85,0,0,1-2.65,1.75,2.57,2.57,0,0,1-.82-.14,3.12,3.12,0,0,1-.65-.3l-1.64-1-6.58-3.91-6.63-3.81-3.34-1.86-.42-.23-.21-.12-.14-.07a1,1,0,0,0-.59,0,1.15,1.15,0,0,0-.31.12l-.43.22-.85.44c-2.27,1.17-4.54,2.31-6.79,3.52s-4.51,2.38-6.74,3.61l-3.36,1.83-.84.46a3.07,3.07,0,0,1-1.28.44,2.68,2.68,0,0,1-2.84-3l.15-1,.29-1.89.57-3.78,1.18-7.56,1.24-7.52a.13.13,0,0,0,0,.08l0,0-.1-.09-.17-.17-1.37-1.34-2.73-2.68-10.93-10.7-.34-.33a4,4,0,0,1-.64-.84,3.63,3.63,0,0,1-.43-2.12,3.68,3.68,0,0,1,2.64-3.17l.52-.11.25,0,.47-.06.95-.12,1.9-.25,7.58-1,7.6-.9,1.9-.23.95-.11c.24,0,.11,0,.09,0l-.09.05-.07.08,0,0,.09-.16.46-.84.91-1.68c2.41-4.5,4.95-8.92,7.51-13.34l1-1.66.48-.83.24-.41.13-.23a3.49,3.49,0,0,1,.22-.33,2.66,2.66,0,0,1,2.83-.9,2.52,2.52,0,0,1,1.26.84,2.85,2.85,0,0,1,.37.62l.18.44q1.45,3.54,3,7.06c1,2.36,2,4.68,3.06,7,.51,1.17,1.06,2.32,1.59,3.48l.8,1.74a2.12,2.12,0,0,0,.45.75A1.42,1.42,0,0,0,421,53.27Zm-.06.39a1.82,1.82,0,0,1-1-.46,2.52,2.52,0,0,1-.56-.86l-.84-1.72c-.56-1.14-1.11-2.3-1.69-3.43-1.17-2.27-2.29-4.56-3.5-6.81s-2.39-4.51-3.6-6.76l-.23-.42a.8.8,0,0,0-.14-.18.58.58,0,0,0-.33-.15.56.56,0,0,0-.57.28L407,36.48c-2.09,4.66-4.2,9.31-6.45,13.88l-.83,1.72-.42.86-.13.27a3.57,3.57,0,0,1-2,1.67,4.26,4.26,0,0,1-.84.18l-.95.13-1.89.27L386,56.53l-7.58,1-3.49.44a.45.45,0,0,0,.34-.4.51.51,0,0,0-.07-.28s-.06-.08-.07-.08l.33.34,10.65,11,2.66,2.75,1.33,1.37.4.42a3.41,3.41,0,0,1,.53.84,3.36,3.36,0,0,1,.24,1.95c-.53,2.56-1,5-1.57,7.52L388,90.85l-.83,3.73-.42,1.87-.2.9a.5.5,0,0,0,0,.3.58.58,0,0,0,.52.37,6.28,6.28,0,0,0,1.38-.58l3.46-1.62q3.47-1.61,6.9-3.3c2.3-1.1,4.57-2.26,6.85-3.39l.86-.43.43-.21a2.55,2.55,0,0,1,.57-.22,2.21,2.21,0,0,1,1.29.08l.29.13.21.11.42.23,3.37,1.81,6.8,3.51,6.85,3.41,1.71.85c.19.09.15.07.22.08a.25.25,0,0,0,.12,0,.42.42,0,0,0,.21-.1.33.33,0,0,0,.1-.19.2.2,0,0,0,0-.09.1.1,0,0,0,0,0l0-.13L428.74,96l-1.42-7.52c-.43-2.51-.9-5-1.29-7.54l-.6-3.78-.08-.47,0-.24a3.75,3.75,0,0,1,0-.45,3.37,3.37,0,0,1,.52-1.9,3.33,3.33,0,0,1,.3-.4,3.73,3.73,0,0,1,.3-.3l.35-.32.7-.65,2.81-2.59,2.86-2.54c1.9-1.71,3.84-3.36,5.77-5l2.91-2.49a12.91,12.91,0,0,0,1.15-1,.7.7,0,0,0-.06-.79.73.73,0,0,0-.37-.26c-.23-.06-.6-.13-.89-.2l-1.87-.4L436,56.39C431,55.39,426,54.45,420.95,53.66Z"
                     fill="#FFFCF9" style="opacity: 1;"></path>
                 <path
                     d="M408.12,83.45l-17.78,8.94,3.72-19.55-14-14.15,19.74-2.5,9.13-17.68,8.48,18L437,59.73l-14.5,13.63,3,19.67Z"
-                    fill="#C89568" stroke="#000000" stroke-width="2" />
+                    fill="url(#starRadialGrad)" stroke="#ffffff" stroke-width="2.2" />
             </g>
+            <!-- 10 Quả Châu Ảnh Kỷ Niệm treo trên cây thông -->
+            <g id="treeOrnamentsGroup"></g>
             <circle class="sparkle" fill="url(#dotGrad)" cx="0" cy="0" r="50" data-svg-origin="0 0"
                 transform="matrix(1,0,0,1,609.6,464.1)"
                 style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;"></circle>
         </g>
-        <foreignObject id="endMessage"  x="0" y="550" width="800" height="250" style="opacity: 0;">
-        </foreignObject>
-        <path class="particle" id="star"
-            d="M4.55,0 C5.01667,0.95 5.48333,1.9 5.95,2.85 7,3 8.05,3.15 9.1,3.3 8.34,4.04 7.58,4.78 6.82,5.52 7,6.56333 7.18,7.60667 7.36,8.65 6.42333,8.15667 5.48667,7.66333 4.55,7.17 3.61333,7.66333 2.67667,8.15667 1.74,8.65 1.91667,7.60667 2.09333,6.56333 2.27,5.52 1.51333,4.78 0.75667,4.04 0,3.3 1.04667,3.15 2.09333,3 3.14,2.85 3.61,1.9 4.08,0.95 4.55,0 z"
-            fill="#F6FBFE" data-svg-origin="4.550000190734863 4.324999809265137"
-            transform="matrix(0,0,0,0,510.973,395.0906)"
-            style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0.7167;"></path>
-        <path id="heart" class="particle" d="M2.9,0C2.53,0,2.2,0.18,2,0.47C1.8,0.18,1.47,0,1.1,0C0.49,0,0,0.49,0,1.1
-      C0,2.6,1.56,4,2,4s2-1.4,2-2.9C4,0.49,3.51,0,2.9,0z" fill="#ACE8F8" data-svg-origin="2 2"
-            transform="matrix(0,0,0,0,562.4309,679.3396)"
-            style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0.6382;"></path>
-        <path class="particle" id="cross"
-            d="M4,3.5 C3.5,3 3,2.5 2.5,2 3,1.5 3.5,1 4,0.5 3.83333,0.33333 3.66667,0.16667 3.5,0 3,0.5 2.5,1 2,1.5 1.5,1 1,0.5 0.5,0 0.33333,0.16667 0.16667,0.33333 0,0.5 0.5,1 1,1.5 1.5,2 1,2.5 0.5,3 0,3.5 0.16667,3.66667 0.33333,3.83333 0.5,4 1,3.5 1.5,3 2,2.5 2.5,3 3,3.5 3.5,4 3.66667,3.83333 3.83333,3.66667 4,3.5 z"
-            fill="#E8F6F8" data-svg-origin="2 2" transform="matrix(0,0,0,0,516.9478,494.2122)"
-            style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0.5128;"></path>
-        <circle id="circ" class="particle" cx="0" cy="0" r="1" fill="#446D39" data-svg-origin="0 0"
-            transform="matrix(0,0,0,0,522.6302,435.2737)"
-            style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0.7852;"></circle>
     </svg>
 
-
-
-
-    <audio id="audioElement" autoplay hidden loop src="./christmas-background-music.mp3">
-        <source src="./static/christmas-background-music.mp3" type="audio/mpeg">
-                  unsupported !! 
-    </audio>    
-
-
-
+    <audio id="audioElement" hidden loop src="./christmas-background-music.mp3">
+        <source src="./christmas-background-music.mp3" type="audio/mpeg">
+    </audio>
 
     <script src="./gsap.min.js"></script>
     <script src="./MorphSVGPlugin3.min.js"></script>
@@ -193,176 +410,7 @@
     <script src="./MotionPathPlugin.min.js"></script>
     <script src="./Physics2DPlugin3.min.js"></script>
     <script src="./EasePack3.min.js"></script>
-
-    <!-- cay thong -->
-    <script id="rendered-js">
-        function displayText() {
-            const greetingArr = 'Merry Christmas !!'.split('');
-            const greetingArr2 = 'Merry Christmas! Mùa đông đến rồi, em nhớ mặc áo ấm nha. Chúc em giáng sinh an lành!'.split('');
-            const textContainer = document.querySelector('.text-container.text-outside-card');
-            const textContainer2 = document.querySelector('.text-container.text-inside-card');
-
-            function renderText(textContainer, greetingArr) {
-                if (textContainer) {
-                    textContainer.innerHTML = '';
-                }
-
-                for (let i = 0; i < greetingArr.length; i++) {
-                    const char = greetingArr[i];
-                    const spanEle = document.createElement('span');
-                    spanEle.setAttribute('style', `--index: ${i+1}`);
-                    spanEle.style.transform = 'scale(1)';
-                    spanEle.innerText = char;
-                    if (char === '') {
-                        spanEle.innerHTML = '&nbsp;'
-                    }
-
-                    if (textContainer) {
-                        textContainer.appendChild(spanEle);
-                    }
-                }
-            }
-
-            renderText(textContainer, greetingArr)
-            window.renderText = () => renderText(textContainer2, greetingArr2)
-        }     
-        // displayText();   
-        (function () {
-            function r(a) { gsap.killTweensOf(a, { opacity: !0 }); gsap.fromTo(a, { opacity: 1 }, { duration: .07, opacity: Math.random(), repeat: -1 }); } function t(a) {
-                e && (a = l[d], gsap.set(a, { x: gsap.getProperty(".pContainer", "x"), y: gsap.getProperty(".pContainer", "y"), scale: m() }), gsap.timeline().to(a, {
-                    duration: gsap.utils.random(.61, 6), physics2D: { velocity: gsap.utils.random(-23, 23), angle: gsap.utils.random(-180, 180), gravity: gsap.utils.random(-6, 50) }, scale: 0, rotation: gsap.utils.random(-123, 360), ease: "power1", onStart: r, onStartParams: [a],
-                    onRepeat: function (b) { gsap.set(b, { scale: m() }); }, onRepeatParams: [a]
-                }), d++, d = 201 <= d ? 0 : d);
-            } MorphSVGPlugin.convertToPath("polygon"); document.querySelector(".pContainer"); var u = document.querySelector(".mainSVG"); document.querySelector("#star"); var c = document.querySelector(".sparkle"); document.querySelector("#tree"); var e = !0, n = "#E8F6F8 #ACE8F8 #F6FBFE #A2CBDC #B74551 #5DBA72 #910B28 #910B28 #446D39".split(" "), p = ["#star", "#circ", "#cross", "#heart"], l = [], d = 0; gsap.set("svg", { visibility: "visible" }); gsap.set(c,
-                { transformOrigin: "50% 50%", y: -100 }); c = function (a) { var b = [], f = MotionPathPlugin.getRawPath(a)[0]; f.forEach(function (v, g) { var h = {}; h.x = f[2 * g]; h.y = f[2 * g + 1]; g % 2 && b.push(h); }); return b; }; c(".treePath"); var q = c(".treeBottomPath"); c = gsap.timeline({ delay: 0, repeat: -1 }); var k, m = gsap.utils.random(.5, 3, .001, !0); (function () {
-                    for (var a = 201, b; -1 < --a;) {
-                        if (window.CP.shouldStopExecution(0)) break; b = document.querySelector(p[a % p.length]).cloneNode(!0), u.appendChild(b), b.setAttribute("fill", n[a % n.length]), b.setAttribute("class", "particle"), l.push(b), gsap.set(b, {
-                            x: -100,
-                            y: -100, transformOrigin: "50% 50%"
-                        });
-                    } window.CP.exitedLoop(0);
-                })(); (function () { k = gsap.timeline({ onUpdate: t }); k.to(".pContainer, .sparkle", { duration: 6, motionPath: { path: ".treePath", autoRotate: !1 }, ease: "linear" }).to(".pContainer, .sparkle", { duration: 1, onStart: function () { e = !1; }, x: q[0].x, y: q[0].y }).to(".pContainer, .sparkle", { duration: 2, onStart: function () { e = !0; }, motionPath: { path: ".treeBottomPath", autoRotate: !1 }, ease: "linear" }, "-=0").from(".treeBottomMask", { duration: 2, drawSVG: "0% 0%", stroke: "#FFF", ease: "linear" }, "-=2"); })(); c.from([".treePathMask",
-                    ".treePotMask"], { drawSVG: "0% 0%", stroke: "#FFF", stagger: { each: 6 }, duration: gsap.utils.wrap([6, 1, 2]), ease: "linear" }).from(".treeStar", { duration: 3, scaleY: 0, scaleX: .15, transformOrigin: "50% 50%", ease: "elastic(1,0.5)" }, "-=4").to(".sparkle", { duration: 3, opacity: 0, ease: "rough({strength: 2, points: 100, template: linear, taper: both, randomize: true, clamp: false})" }, "-=0").to(".treeStarOutline", { duration: 1, opacity: 1, ease: "rough({strength: 2, points: 16, template: linear, taper: none, randomize: true, clamp: false})" },
-                        // "+=1"); c.add(k, 0); gsap.globalTimeline.timeScale(1.5); k.vars.onComplete = function () { gsap.to('foreignObject', { opacity: 1 }); };
-                        "+=1"); c.add(k, 0); gsap.globalTimeline.timeScale(1.5); k.vars.onComplete = displayText;
-        })();
-    </script>
-
-    <!-- tuyet roi -->
-    <script>
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            
-            // Vị trí ngẫu nhiên từ trái sang phải
-            snowflake.style.left = Math.random() * 100 + '%';
-            
-            // Kích thước ngẫu nhiên
-            const size = Math.random() * 5 + 2;
-            snowflake.style.width = `${size}px`;
-            snowflake.style.height = `${size}px`;
-            
-            document.body.appendChild(snowflake);
-
-            // Động tác rơi
-            snowflake.animate([
-                { transform: 'translateY(-10px)', opacity: 0.8 },
-                { transform: 'translateY(100vh)', opacity: 0.2 }
-            ], {
-                duration: Math.random() * 5000 + 3000, // Thời gian rơi 3-8 giây
-                easing: 'linear',
-                fill: 'forwards'
-            });
-
-            // Xóa bông tuyết sau khi rơi xong
-            setTimeout(() => {
-                snowflake.remove();
-            }, 8000);
-        }
-
-        // Tạo tuyết liên tục
-        function startSnowfall() {
-            setInterval(createSnowflake, 200); // Tạo bông tuyết mỗi 200ms
-        }
-
-        // Bắt đầu hiệu ứng khi trang tải
-        window.addEventListener('load', startSnowfall);
-    </script>    
-
-
-    <script>
-        const viewCardBtn = document.querySelector('.view-card-btn')
-        if (viewCardBtn) {
-            setTimeout(() => {
-                viewCardBtn.style.visibility = 'visible';
-                viewCardBtn.style.opacity = '1';
-                viewCardBtn.style.transform = 'scale(1)';
-                viewCardBtn.style.animation = 'appear 0.8s forwards';
-            }, 8000);
-            // }, 3500);
-        }
-
-        function viewCard() {
-            const card = document.querySelector('.card');
-            const noelTree = document.querySelector('.noel-tree');
-            const viewCardBtn = document.querySelector('.view-card-btn')
-            const wrapperCard = document.querySelector('.wrapper-card')
-
-            if (card) {
-                card.style.visibility = 'visible';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }
-
-            if (noelTree) {
-                noelTree.style.visibility = 'hidden';
-                noelTree.style.opacity = '0';
-            }
-
-            if (viewCardBtn) {
-                viewCardBtn.style.visibility = 'hidden';
-                viewCardBtn.style.opacity = '0';
-            }
-
-            if (wrapperCard) {
-                wrapperCard.addEventListener('mouseover', debounce((event) => {
-                    const textContainer2 = document.querySelector('.text-container.text-inside-card');
-    
-                    if (textContainer2) {
-                        textContainer2.innerHTML = '';
-                    }
-    
-                    setTimeout(() => {
-                        if (window.renderText) {
-                            window.renderText();
-                        }
-                    });
-                }))
-            }
-        }
-
-        function debounce (callback, wait = 800) {
-            let timeoutId = null;
-            return (...args) => {
-                window.clearTimeout(timeoutId);
-                timeoutId = window.setTimeout(() => {
-                    callback(...args);
-                }, wait);
-            };
-        }
-    </script>
-
-  <script>
-document.addEventListener('click', function() {
-    const audio = document.getElementById('audioElement');
-    if (audio.paused) {
-		audio.muted = false;
-		audio.volume = 0.25;
-      	audio.play();
-    }
-}, { once: true });  // chỉ kích hoạt một lần, khi có tương tác đầu tiên
-  </script>
-
+    <script src="./script.js?v=11"></script>
 </body>
 
 </html>

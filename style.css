@@ -78,6 +78,28 @@ a {
     pointer-events: none;
 }
 
+.falling-item {
+    position: absolute;
+    top: 0;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 15;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+    will-change: transform, opacity;
+}
+
+.falling-item:hover svg {
+    transform: scale(1.22);
+    filter: drop-shadow(0 0 8px #ffd166);
+}
+
+.falling-item svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
 
 
 
@@ -152,166 +174,209 @@ a {
 
 
 
-/* card */
-.wrapper-card {
-  position: absolute;
-  width: 100%;
-  height: 80%;
-  top: 0;
-  left: 0;
+/* Không gian Kỷ Niệm: Dây Đèn Vàng Kẹp 10 Ảnh Polaroid Đung Đưa + Bức Thư Giáng Sinh */
+.memories-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 58px 18px 68px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(24px) scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.6s ease;
 }
-.card {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(-100vh);
-    width: 640px;
-    height: 400px;
-    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    -webkit-perspective: 1200px;
-    perspective: 1200px;
-    transition: 1s;
-  }
-  .card:hover, .card:active {
-    transform: rotate(-5deg);
-  }
-  .card:hover .outside, .card:active .outside {
-    transform: rotateY(-135deg);
-  }
-  .outside,
-  .inside {
-    height: 100%;
-    width: 50%;
-    position: absolute;
-    left: 50.1%;
-  }
-  .inside {
-    background: linear-gradient(to right, #e7e7e7, #ffffff 30%);
-    line-height: 3;
-    padding: 0 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    left: 50%;
-  }
-  .outside {
-    padding-right: 40px;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    z-index: 1;
-    transform-origin: left;
-    transition: 2s;
-    cursor: pointer;
-  }
-  .front,
-  .back {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: rotateX(0deg);
-  }
-  .front {
-    background-color: #ffffff;
-    font-family: mountains_of_christmasregular;
-  }  
-  .back {
-    transform: rotateY(180deg);
-    background: linear-gradient(to left, #e7e7e7, #ffffff 30%);
-  }
-  .back img {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .cake {
-    width: 100%;
-    position: absolute;
-    bottom: 30px;
-  }
-  .top-layer,
-  .middle-layer,
-  .bottom-layer {
-    height: 80px;
-    width: 240px;
-    background-repeat: repeat;
-    background-size: 60px 100px;
-    background-position: 28px 0;
-    background-image: linear-gradient(
-        transparent 50px,
-        #fedbab 50px,
-        #fedbab 60px,
-        transparent 60px
-      ),
-      radial-gradient(circle at 30px 5px, #994c10 30px, #fcbf29 31px);
-    border-radius: 10px 10px 0 0;
-    position: relative;
-    margin: auto;
-  }
-  .middle-layer {
-    transform: scale(0.85);
-    top: 6px;
-  }
-  .top-layer {
-    transform: scale(0.7);
-    top: 26px;
-  }
-  .candle {
-    height: 45px;
-    width: 15px;
-    background: repeating-linear-gradient(
-      45deg,
-      #fd3018 0,
-      #fd3018 5px,
-      #ffa89e 5px,
-      #ffa89e 10px
-    );
-    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    bottom: 202px;
-  }
-  .candle:before {
-    content: "";
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    background-color: #ffa500;
-    border-radius: 0 50% 50% 50%;
-    bottom: 48px;
-    transform: rotate(45deg);
-    left: -1px;
-  }
-  .outside p {
-    font-size: 23px;
-    text-transform: uppercase;
-    margin-top: 30px;
-    text-align: center;
-    letter-spacing: 6px;
-    color: #000046;
-  }
-  .inside h1 {
-    font-size: 120px;
-    line-height: 120px;
-  }
 
-  .inside p {
-    font-family: Arial, sans-serif;
-    width: calc(100% - 40px);
-  }
+.memories-stage.is-visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
 
-  .inside img {
-    position: absolute;
-    bottom: 0;
-  }
+.polaroid-string-wall {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 780px;
+  align-items: center;
+}
+
+.polaroid-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  padding-top: 10px;
+}
+
+/* Dây đèn vàng nối ngang phía trên mỗi hàng ảnh */
+.polaroid-row::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 4%;
+  right: 4%;
+  height: 12px;
+  border-bottom: 2px solid rgba(255, 209, 102, 0.75);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(255, 209, 102, 0.4);
+  pointer-events: none;
+}
+
+.hanging-polaroid {
+  position: relative;
+  width: 118px;
+  background: #fffdf9;
+  padding: 6px 6px 12px;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transform-origin: 50% -8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-18px) scale(0.75);
+  transition: opacity 0.45s ease, visibility 0.45s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+  border: 2px solid transparent;
+  user-select: none;
+}
+
+.hanging-polaroid.is-revealed {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  animation: polaroidSway 3.8s ease-in-out infinite alternate;
+  animation-delay: calc(var(--sway-idx, 0) * -0.55s);
+}
+
+/* Kẹp gỗ & bóng đèn LED vàng trên mỗi tấm ảnh Polaroid */
+.hanging-polaroid::before {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 14px;
+  background: linear-gradient(180deg, #dda15e, #bc6c25);
+  border-radius: 2px;
+  box-shadow: 0 0 10px 3px rgba(255, 214, 10, 0.9);
+  z-index: 2;
+}
+
+.hanging-polaroid img {
+  width: 100%;
+  height: 102px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 3px;
+  display: block;
+}
+
+.hanging-polaroid-label {
+  font-family: mountains_of_christmasregular, cursive;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #b5173a;
+  text-align: center;
+  margin-top: 5px;
+  line-height: 1.1;
+}
+
+.hanging-polaroid:hover,
+.hanging-polaroid.is-spotlight {
+  animation-play-state: paused;
+  transform: scale(1.24) translateY(-6px) rotate(0deg) !important;
+  z-index: 30;
+  border-color: #ffd166;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.65), 0 0 22px rgba(255, 209, 102, 0.85);
+}
+
+@keyframes polaroidSway {
+  0% { transform: rotate(-3.5deg); }
+  100% { transform: rotate(3.5deg); }
+}
+
+/* Bức Thư Giáng Sinh Lãng Mạn bên dưới dây đèn ảnh (chỉ hiện sau khi 10 ảnh đã hiện xong) */
+.love-letter-card {
+  width: 100%;
+  max-width: 680px;
+  background: rgba(24, 18, 38, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255, 209, 102, 0.55);
+  border-radius: 22px;
+  padding: 16px 24px 18px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 77, 109, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(22px) scale(0.95);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.65s ease;
+}
+
+.love-letter-card.is-revealed {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.love-letter-title {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #ffd166;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.love-letter-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.slideshow-toggle-btn {
+  background: linear-gradient(135deg, #ffd166, #f4a261);
+  color: #2b2d42;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 209, 102, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slideshow-toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(255, 209, 102, 0.65);
+}
+
+.slideshow-toggle-btn.is-active {
+  background: linear-gradient(135deg, #2ec4b6, #2a9d8f);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(46, 196, 182, 0.6);
+}
 
 
 
@@ -324,33 +389,43 @@ a {
     opacity: 1;
   }
 
+  .text-container .word {
+    display: inline-flex;
+    white-space: nowrap;
+  }
+
   .text-outside-card {
     position: absolute;
-    bottom: 100px;    
+    bottom: 100px;
+    padding: 0 16px;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
   }
 
   .text-inside-card {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0;
-    font-size: 1.5rem;
-}
-  .text-container span {
+    position: relative;
+    margin: 2px 0;
+    font-size: 1.45rem;
+    min-height: 2.8rem;
+  }
+  .text-container span.char,
+  .text-container span.space {
     line-height: 2rem;
-    min-width: 9px;
     color: white;
     display: inline-block;
     opacity: 0;
     transform: scale(0.5);
     animation: appear 0.8s forwards;
-    animation-delay: calc(0.1s * var(--index));
+    animation-delay: calc(0.08s * var(--index));
   }
 
-  .text-container.text-inside-card span {
-    color: #d30045;
-    /* animation: appear 1s forwards infinite;
-    animation-delay: calc(0.1s * var(--index)); */
+  .text-container span.space {
+    min-width: 8px;
+  }
+
+  .text-container.text-inside-card span.char,
+  .text-container.text-inside-card span.space {
+    color: #ffe5ec;
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
   }
 
   @keyframes appear {
@@ -368,35 +443,1484 @@ a {
     }
   }
 
+  /* 1. Dây đèn LED Giáng sinh trên đỉnh màn hình */
+  .christmas-lights {
+    position: fixed;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none;
+    z-index: 30;
+  }
 
+  .christmas-lights li {
+    position: relative;
+    width: 12px;
+    height: 24px;
+    border-radius: 50%;
+    margin-top: 12px;
+    display: inline-block;
+    animation-duration: 1.8s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
 
+  .christmas-lights li::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    background: #222;
+    border-radius: 2px;
+  }
 
+  .christmas-lights li::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 6px;
+    width: 65px;
+    height: 14px;
+    border-bottom: solid #2a3a30 2px;
+    border-radius: 50%;
+  }
+
+  .christmas-lights li:last-child::after {
+    display: none;
+  }
+
+  .christmas-lights li:nth-child(4n+1) {
+    background: #ff3b30;
+    animation-name: light-red;
+  }
+
+  .christmas-lights li:nth-child(4n+2) {
+    background: #ffd60a;
+    animation-name: light-gold;
+    animation-delay: 0.45s;
+  }
+
+  .christmas-lights li:nth-child(4n+3) {
+    background: #30d158;
+    animation-name: light-green;
+    animation-delay: 0.9s;
+  }
+
+  .christmas-lights li:nth-child(4n+4) {
+    background: #32ade6;
+    animation-name: light-blue;
+    animation-delay: 1.35s;
+  }
+
+  @keyframes light-red {
+    0%, 100% { background: #ff3b30; box-shadow: 0 3px 16px 3px rgba(255, 59, 48, 0.85); }
+    50% { background: rgba(255, 59, 48, 0.35); box-shadow: 0 2px 6px 1px rgba(255, 59, 48, 0.25); }
+  }
+
+  @keyframes light-gold {
+    0%, 100% { background: #ffd60a; box-shadow: 0 3px 16px 3px rgba(255, 214, 10, 0.85); }
+    50% { background: rgba(255, 214, 10, 0.35); box-shadow: 0 2px 6px 1px rgba(255, 214, 10, 0.25); }
+  }
+
+  @keyframes light-green {
+    0%, 100% { background: #30d158; box-shadow: 0 3px 16px 3px rgba(48, 209, 88, 0.85); }
+    50% { background: rgba(48, 209, 88, 0.35); box-shadow: 0 2px 6px 1px rgba(48, 209, 88, 0.25); }
+  }
+
+  @keyframes light-blue {
+    0%, 100% { background: #32ade6; box-shadow: 0 3px 16px 3px rgba(50, 173, 230, 0.85); }
+    50% { background: rgba(50, 173, 230, 0.35); box-shadow: 0 2px 6px 1px rgba(50, 173, 230, 0.25); }
+  }
+
+  /* Ông già Noel cưỡi tuần lộc bay ngang bầu trời */
+  .santa-sleigh {
+    position: fixed;
+    top: 11%;
+    left: -320px;
+    width: 260px;
+    height: 90px;
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0.92;
+    filter: drop-shadow(0 0 10px rgba(255, 223, 128, 0.45));
+    animation: santaFly 24s linear infinite;
+  }
+
+  .santa-sleigh svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @keyframes santaFly {
+    0% {
+      transform: translate3d(0, 10px, 0) rotate(-3deg);
+    }
+    15% {
+      transform: translate3d(35vw, -18px, 0) rotate(2deg);
+    }
+    30% {
+      transform: translate3d(70vw, 6px, 0) rotate(-4deg);
+    }
+    45% {
+      transform: translate3d(105vw, -15px, 0) rotate(1deg);
+    }
+    60%, 100% {
+      transform: translate3d(145vw, -5px, 0) rotate(0deg);
+    }
+  }
+
+  /* 2. Đồng hồ đếm ngược & Nút bật/tắt nhạc */
+  .countdown-badge {
+    position: fixed;
+    top: 28px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    user-select: none;
+  }
+
+  .countdown-badge .countdown-time {
+    font-weight: 700;
+    color: #ffd166;
+    letter-spacing: 0.5px;
+  }
+
+  /* 2. Hộp Nhạc Đĩa Than Cổ Điển Góc Trên Phải (Vintage Vinyl Music Player) */
+  .music-player-widget {
+    position: fixed;
+    top: 24px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    user-select: none;
+  }
+
+  .music-vinyl-btn {
+    background: rgba(18, 22, 42, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    padding: 6px 14px 6px 8px;
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .music-vinyl-btn:hover {
+    background: rgba(29, 35, 65, 0.92);
+    border-color: rgba(255, 209, 102, 0.6);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(255, 209, 102, 0.3);
+  }
+
+  .music-player-widget.is-playing .music-vinyl-btn {
+    border-color: rgba(255, 209, 102, 0.85);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 18px rgba(255, 209, 102, 0.45);
+  }
+
+  /* Đĩa Than Vinyl */
+  .vinyl-disc-wrap {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+
+  .vinyl-disc {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #2b2b2b 0%, #111111 40%, #202020 70%, #0a0a0a 100%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 0 0 1px #333;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease;
+  }
+
+  /* Rãnh đĩa than */
+  .vinyl-groove {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5), inset 0 0 0 4px rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+  }
+
+  /* Nhãn tâm đĩa than */
+  .vinyl-center-sticker {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #e63946 0%, #d62828 70%, #9b2226 100%);
+    border: 1.5px solid #ffd166;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    color: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+
+  /* Kim đĩa than (Tonearm) */
+  .vinyl-tonearm {
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    width: 18px;
+    height: 22px;
+    pointer-events: none;
+    transform-origin: 15px 3px;
+    transform: rotate(0deg);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 3;
+  }
+
+  .tonearm-pivot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffd166;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .tonearm-rod {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 2px;
+    height: 18px;
+    background: linear-gradient(180deg, #ffd166, #d4a373);
+    transform: rotate(-25deg);
+    transform-origin: top center;
+  }
+
+  .tonearm-head {
+    position: absolute;
+    bottom: 2px;
+    left: 1px;
+    width: 5px;
+    height: 4px;
+    background: #e63946;
+    border-radius: 1px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Khi nhạc đang phát: đĩa quay và kim hạ xuống */
+  .music-player-widget.is-playing .vinyl-disc {
+    animation: spinVinyl 3.6s linear infinite;
+  }
+
+  .music-player-widget.is-playing .vinyl-tonearm {
+    transform: rotate(26deg);
+  }
+
+  @keyframes spinVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Thông tin bài hát & trạng thái */
+  .music-info-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    text-align: left;
+  }
+
+  .music-track-title {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #ffd166;
+    letter-spacing: 0.3px;
+    line-height: 1.1;
+  }
+
+  .music-status-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .music-status-text {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1;
+  }
+
+  /* Vạch sóng âm thanh nhảy múa (Equalizer) */
+  .audio-equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+  }
+
+  .audio-equalizer span {
+    width: 2px;
+    height: 3px;
+    background: #38b000;
+    border-radius: 1px;
+    transition: height 0.25s ease;
+  }
+
+  .music-player-widget.is-playing .audio-equalizer span {
+    background: #ffd166;
+    animation: eqWave 0.9s ease-in-out infinite alternate;
+  }
+
+  .music-player-widget.is-playing .audio-equalizer span:nth-child(1) { animation-duration: 0.65s; height: 9px; }
+  .music-player-widget.is-playing .audio-equalizer span:nth-child(2) { animation-duration: 0.95s; animation-delay: 0.15s; height: 12px; }
+  .music-player-widget.is-playing .audio-equalizer span:nth-child(3) { animation-duration: 0.75s; animation-delay: 0.3s; height: 7px; }
+  .music-player-widget.is-playing .audio-equalizer span:nth-child(4) { animation-duration: 1.1s; animation-delay: 0.1s; height: 10px; }
+
+  @keyframes eqWave {
+    0% { height: 3px; background: #2ec4b6; }
+    50% { height: 12px; background: #ffd166; }
+    100% { height: 4px; background: #ff4d6d; }
+  }
+
+  /* Bảng chỉnh âm lượng tinh tế thu gọn */
+  .music-volume-panel {
+    background: rgba(18, 22, 42, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 3px 10px 3px 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    opacity: 0.7;
+    transition: all 0.25s ease;
+  }
+
+  .music-volume-panel:hover,
+  .music-player-widget:hover .music-volume-panel {
+    opacity: 1;
+    border-color: rgba(255, 209, 102, 0.5);
+  }
+
+  .vol-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+  }
+
+  .vol-btn:hover {
+    transform: scale(1.18);
+  }
+
+  .vol-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 65px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffd166;
+    box-shadow: 0 0 6px #ffd166;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+
+  .vol-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+  }
+
+  /* Nốt nhạc bay lơ lửng */
+  .floating-music-note {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1010;
+    font-size: 1.1rem;
+    color: #ffd166;
+    text-shadow: 0 0 10px rgba(255, 209, 102, 0.8);
+    will-change: transform, opacity;
+  }
+
+  /* 3. Nút quay lại ngắm cây thông */
+  .back-tree-btn {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    z-index: 999;
+    background: linear-gradient(135deg, #2a9d8f, #1d6f65);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    transition: all 0.4s ease;
+  }
+
+  .back-tree-btn.is-visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .back-tree-btn:hover {
+    transform: translateX(-50%) scale(1.06);
+    box-shadow: 0 8px 22px rgba(42, 157, 143, 0.55);
+  }
+
+  /* 4. Hộp quà bí mật bên trong bức thư & Modal quà bất ngờ */
+  .gift-box-btn {
+    position: relative;
+    background: linear-gradient(135deg, #e63946, #d62828);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+    animation: giftBounce 2s ease-in-out infinite;
+    z-index: 5;
+  }
+
+  .gift-box-btn:hover {
+    background: linear-gradient(135deg, #ff4d5a, #e63946);
+  }
+
+  @keyframes giftBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-4px) scale(1.05); }
+  }
+
+  .gift-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 15, 28, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    padding: 16px;
+  }
+
+  .gift-modal-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .gift-modal {
+    background: linear-gradient(145deg, #fff9f5, #ffe8ec);
+    border: 2px solid #ffd166;
+    border-radius: 22px;
+    max-width: 380px;
+    width: 100%;
+    padding: 26px 22px;
+    text-align: center;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+    transform: scale(0.85);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #2b2d42;
+  }
+
+  .gift-modal-overlay.is-open .gift-modal {
+    transform: scale(1);
+  }
+
+  .gift-modal-icon {
+    font-size: 3.2rem;
+    line-height: 1;
+    margin-bottom: 10px;
+    display: inline-block;
+    animation: giftBounce 1.8s ease-in-out infinite;
+  }
+
+  .gift-modal h3 {
+    margin: 0 0 10px;
+    color: #d30045;
+    font-size: 1.3rem;
+  }
+
+  .gift-modal p {
+    margin: 0 0 18px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #3d405b;
+  }
+
+  .gift-voucher {
+    background: #fff;
+    border: 2px dashed #e63946;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #d62828;
+  }
+
+  .gift-close-btn {
+    background: linear-gradient(135deg, #d30045, #ff4d6d);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(211, 0, 69, 0.35);
+    transition: transform 0.2s ease;
+  }
+
+  .gift-close-btn:hover {
+    transform: scale(1.05);
+  }
+
+  /* 5. Hiệu ứng tim/sao bung ra & Vệt sao con trỏ chuột */
+  .burst-particle,
+  .cursor-sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1500;
+    user-select: none;
+    will-change: transform, opacity;
+  }
+
+  /* 6. Cực quang Bắc Cực (Aurora Borealis) & Sao băng */
+  .aurora-bg {
+    position: fixed;
+    top: 0;
+    left: -20%;
+    width: 140%;
+    height: 55vh;
+    pointer-events: none;
+    z-index: 1;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(42, 157, 143, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 15%, rgba(155, 93, 229, 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 30%, rgba(0, 245, 212, 0.14) 0%, transparent 65%);
+    filter: blur(28px);
+    animation: auroraWave 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes auroraWave {
+    0% { transform: translateX(-4%) scaleY(0.95) rotate(-1deg); opacity: 0.75; }
+    50% { transform: translateX(3%) scaleY(1.1) rotate(1deg); opacity: 1; }
+    100% { transform: translateX(-2%) scaleY(0.9) rotate(-0.5deg); opacity: 0.8; }
+  }
+
+  .shooting-star {
+    position: fixed;
+    width: 110px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 209, 102, 0.5), transparent);
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 3;
+    filter: drop-shadow(0 0 6px #ffd166);
+  }
+
+  /* 7. Người tuyết tương tác ở góc trái dưới */
+  .snowman-widget {
+    position: fixed;
+    bottom: 18px;
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    user-select: none;
+  }
+
+  .snowman-btn {
+    width: 72px;
+    height: 86px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+    transition: transform 0.25s ease;
+    animation: snowmanIdle 3s ease-in-out infinite;
+  }
+
+  .snowman-btn:hover {
+    transform: scale(1.08);
+  }
+
+  .snowman-btn.is-jumping {
+    animation: snowmanJump 0.6s ease;
+  }
+
+  @keyframes snowmanIdle {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-4px) rotate(2deg); }
+  }
+
+  @keyframes snowmanJump {
+    0%, 100% { transform: translateY(0) scale(1); }
+    35% { transform: translateY(-18px) scale(1.1, 0.92) rotate(-6deg); }
+    65% { transform: translateY(-8px) scale(0.96, 1.05) rotate(6deg); }
+  }
+
+  .snowman-bubble {
+    background: rgba(255, 255, 255, 0.95);
+    color: #1d1d2e;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.45;
+    padding: 10px 14px;
+    border-radius: 16px 16px 16px 4px;
+    max-width: 230px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    border: 2px solid #ffd166;
+    margin-bottom: 42px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(0.92);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+
+  .snowman-bubble.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* 8. Nút & Modal "Gửi điều ước Giáng sinh" + Đèn trời bay lên */
+  .wish-trigger-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #f4a261, #e76f51);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 20px rgba(231, 111, 81, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .wish-trigger-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(244, 162, 97, 0.65);
+  }
+
+  .wish-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid #ffd166;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    outline: none;
+    background: #fff;
+    color: #2b2d42;
+  }
+
+  .wish-input:focus {
+    border-color: #e63946;
+  }
+
+  .wish-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .wish-preset-chip {
+    background: rgba(230, 57, 70, 0.1);
+    color: #d62828;
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-family: 'Poppins', Arial, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .wish-preset-chip:hover {
+    background: rgba(230, 57, 70, 0.2);
+  }
+
+  .sky-wish-lantern {
+    position: fixed;
+    bottom: -80px;
+    z-index: 900;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    filter: drop-shadow(0 0 14px rgba(255, 209, 102, 0.9));
+  }
+
+  .sky-wish-lantern .lantern-icon {
+    font-size: 2.3rem;
+    line-height: 1;
+  }
+
+  .sky-wish-lantern .lantern-text {
+    background: rgba(255, 248, 231, 0.95);
+    color: #b5173a;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.45;
+    padding: 8px 16px;
+    border-radius: 16px;
+    border: 1.5px solid #ffd166;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+    width: max-content;
+    max-width: min(360px, 88vw);
+  }
+
+  /* 9. Khung ảnh kỷ niệm Polaroid bên trong hộp quà */
+  .polaroid-frame {
+    background: #ffffff;
+    padding: 8px 8px 18px 8px;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+    width: 170px;
+    margin: 0 auto 14px;
+    transform: rotate(-2.5deg);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #eee;
+  }
+
+  .polaroid-frame:hover {
+    transform: rotate(1.5deg) scale(1.04);
+  }
+
+  .polaroid-frame img {
+    width: 100%;
+    height: 115px;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+  }
+
+  .polaroid-caption {
+    font-family: mountains_of_christmasregular, cursive;
+    font-size: 1rem;
+    color: #d30045;
+    margin-top: 6px;
+    font-weight: 700;
+  }
+
+  .gift-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .gift-shuffle-btn {
+    background: #fff;
+    color: #d30045;
+    border: 1.5px solid #d30045;
+    padding: 9px 15px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .gift-shuffle-btn:hover {
+    background: #ffe8ec;
+    transform: scale(1.04);
+  }
+
+  /* 10. Chủ đề màu sắc đêm Giáng sinh (khi bấm vào Ngôi sao trên cây thông) */
+  body {
+    transition: background-color 1s ease;
+  }
+
+  body.theme-rose {
+    background-color: #2d142c;
+  }
+  body.theme-rose .tree path,
+  body.theme-rose .treeBottom,
+  body.theme-rose .treePot {
+    fill: #ff758f !important;
+  }
+
+  body.theme-frozen {
+    background-color: #0b2545;
+  }
+  body.theme-frozen .tree path,
+  body.theme-frozen .treeBottom,
+  body.theme-frozen .treePot {
+    fill: #72efdd !important;
+  }
+
+  body.theme-gold {
+    background-color: #241909;
+  }
+  body.theme-gold .tree path,
+  body.theme-gold .treeBottom,
+  body.theme-gold .treePot {
+    fill: #ffd166 !important;
+  }
+
+  body.theme-rose .treeStar {
+    filter: drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 26px #ff758f) drop-shadow(0 0 50px rgba(255, 117, 143, 0.9));
+  }
+  body.theme-frozen .treeStar {
+    filter: drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 26px #72efdd) drop-shadow(0 0 50px rgba(114, 239, 221, 0.9));
+  }
+  body.theme-gold .treeStar {
+    filter: drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 28px #ffd166) drop-shadow(0 0 60px rgba(255, 209, 102, 0.95));
+  }
+
+  .treeStar {
+    cursor: pointer;
+    pointer-events: all;
+    filter: drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 24px #ffd166) drop-shadow(0 0 45px rgba(255, 209, 102, 0.88));
+    animation: starRadiance 2.2s ease-in-out infinite alternate;
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+
+  .treeStar:hover {
+    filter: drop-shadow(0 0 18px #ffffff) drop-shadow(0 0 38px #ffe066) drop-shadow(0 0 75px #ffd166) brightness(1.35);
+    transform: scale(1.1);
+  }
+
+  .star-halo {
+    animation: starHaloPulse 2.2s ease-in-out infinite alternate;
+    pointer-events: none;
+    transform-origin: 408px 66px;
+  }
+
+  @keyframes starRadiance {
+    0% {
+      filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 20px #ffd166) drop-shadow(0 0 38px rgba(255, 209, 102, 0.8));
+    }
+    50% {
+      filter: drop-shadow(0 0 16px #ffffff) drop-shadow(0 0 34px #fff275) drop-shadow(0 0 65px rgba(255, 209, 102, 0.95)) drop-shadow(0 0 90px rgba(255, 183, 3, 0.7));
+    }
+    100% {
+      filter: drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 24px #ffd166) drop-shadow(0 0 45px rgba(255, 209, 102, 0.85));
+    }
+  }
+
+  @keyframes starHaloPulse {
+    0% {
+      transform: scale(0.92);
+      opacity: 0.75;
+    }
+    50% {
+      transform: scale(1.25);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.96);
+      opacity: 0.82;
+    }
+  }
+
+  /* 11. 10 Quả Châu Ảnh treo trên Cây Thông Noel (SVG Photo Ornaments) */
+  .tree-ornament {
+    cursor: pointer;
+    pointer-events: all;
+    opacity: 0;
+    transition: opacity 0.8s ease, filter 0.25s ease;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55));
+  }
+
+  .tree-ornament.is-ready {
+    opacity: 1;
+  }
+
+  .tree-ornament-inner {
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: 0px 0px;
+  }
+
+  .tree-ornament:hover {
+    filter: drop-shadow(0 0 14px rgba(255, 209, 102, 0.95));
+  }
+
+  .tree-ornament:hover .tree-ornament-inner {
+    transform: scale(1.32);
+  }
+
+  /* 12. Quả cầu pha lê chứa ảnh bay lơ lửng (Floating Memory Orbs) */
+  .floating-memory-orb {
+    position: fixed;
+    bottom: -80px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    padding: 3px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 209, 102, 0.55) 45%, rgba(230, 57, 70, 0.4) 100%);
+    box-shadow: 0 0 18px rgba(255, 209, 102, 0.65), inset 0 0 10px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    z-index: 25;
+    pointer-events: auto;
+    user-select: none;
+    will-change: transform, opacity;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .floating-memory-orb:hover {
+    box-shadow: 0 0 26px rgba(255, 77, 109, 0.95), inset 0 0 12px #fff;
+  }
+
+  .floating-memory-orb img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .floating-memory-orb::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 18px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.65);
+    transform: rotate(-28deg);
+    pointer-events: none;
+  }
+
+  /* 13. Khung xem ảnh kỷ niệm phóng to (Photo Lightbox Modal) */
+  .photo-lightbox-card {
+    background: linear-gradient(145deg, #fffdf9, #ffeef2);
+    border: 3px solid #ffd166;
+    border-radius: 24px;
+    max-width: 410px;
+    width: 100%;
+    padding: 18px 18px 20px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    position: relative;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #2b2d42;
+    transform: scale(0.88);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .gift-modal-overlay.is-open .photo-lightbox-card {
+    transform: scale(1);
+  }
+
+  .lightbox-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #e63946, #d62828);
+    color: #fff;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+
+  .lightbox-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f8edeb;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    border: 2px solid #fff;
+    margin-bottom: 12px;
+  }
+
+  .lightbox-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+
+  .lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(29, 29, 46, 0.65);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .lightbox-nav-btn:hover {
+    background: #e63946;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .lightbox-nav-btn.prev { left: 10px; }
+  .lightbox-nav-btn.next { right: 10px; }
+
+  .lightbox-caption {
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: #b5173a;
+    margin: 0 0 14px;
+    min-height: 2.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 14. Huy hiệu bắt quà rơi & Nút đổi màu/Pháo hoa */
+  .sub-top-left-bar {
+    position: fixed;
+    top: 72px;
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .mini-action-pill {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.78rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+    transition: transform 0.2s ease, background 0.2s ease;
+    user-select: none;
+  }
+
+  .mini-action-pill:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .mini-action-pill.unlocked {
+    background: linear-gradient(135deg, rgba(255, 209, 102, 0.35), rgba(230, 57, 70, 0.45));
+    border-color: #ffd166;
+    box-shadow: 0 0 14px rgba(255, 209, 102, 0.5);
+  }
+
+  .floating-score-pop {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2000;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ffd166;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  .cert-seal {
+    display: inline-block;
+    background: radial-gradient(circle, #ffd166 0%, #f4a261 70%, #e76f51 100%);
+    color: #780000;
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 2px dashed #d62828;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(244, 162, 97, 0.45);
+  }
 
   @media only screen and (max-width: 1000px) {
     .noel-tree {
-      transform: scale(2);
-    }
-
-    .card {
-        width: 90vw;
-        height: calc(90vw / 640 * 400);
-
+      width: 100%;
+      height: 82vh;
+      transform: none;
     }
 
     .text-outside-card {
-      bottom: 150px;
+      bottom: 140px;
+      font-size: 1.6rem;
     }
 
     .view-card-btn {
-      bottom: 80px;
+      bottom: 60px;
     }
 
-    .inside img {
-      transform: scale(0.5);
-      bottom: -25%;
+    .memories-stage {
+      padding: 68px 10px 72px;
+      gap: 10px;
+      overflow-y: auto;
+      justify-content: flex-start;
     }
 
-    .outside p {
-      font-size: 14px;
+    .polaroid-row {
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hanging-polaroid {
+      width: 66px;
+      padding: 4px 4px 8px;
+    }
+
+    .hanging-polaroid img {
+      height: 58px;
+    }
+
+    .hanging-polaroid-label {
+      font-size: 0.65rem;
+    }
+
+    .love-letter-card {
+      padding: 12px 14px;
+    }
+
+    .text-inside-card {
+      font-size: clamp(0.95rem, 3.2vw, 1.25rem);
+    }
+
+    .text-container.text-inside-card span {
+      line-height: 1.45;
+    }
+
+    .text-container.text-inside-card span.space {
+      min-width: 5px;
+    }
+
+    .gift-box-btn,
+    .slideshow-toggle-btn {
+      padding: 7px 13px;
+      font-size: 0.76rem;
+    }
+
+    .countdown-badge {
+      top: 24px;
+      left: 10px;
+      padding: 6px 10px;
+      font-size: 0.72rem;
+    }
+
+    .music-player-widget {
+      top: 20px;
+      right: 10px;
+      gap: 4px;
+    }
+
+    .music-vinyl-btn {
+      padding: 4px 10px 4px 6px;
+      gap: 7px;
+    }
+
+    .vinyl-disc-wrap,
+    .vinyl-disc {
+      width: 32px;
+      height: 32px;
+    }
+
+    .music-track-title {
+      font-size: 0.68rem;
+    }
+
+    .music-status-text {
+      font-size: 0.64rem;
+    }
+
+    .vol-slider {
+      width: 50px;
+    }
+
+    .santa-sleigh {
+      width: 180px;
+      height: 62px;
+      top: 13%;
+    }
+
+    .snowman-widget {
+      bottom: 12px;
+      left: 10px;
+    }
+
+    .snowman-btn {
+      width: 56px;
+      height: 68px;
+    }
+
+    .snowman-bubble {
+      font-size: 0.72rem;
+      max-width: 175px;
+      padding: 8px 11px;
+    }
+
+    .wish-trigger-btn {
+      bottom: 16px;
+      right: 10px;
+      padding: 8px 12px;
+      font-size: 0.75rem;
+    }
+
+    .sub-top-left-bar {
+      top: 62px;
+      left: 10px;
+      gap: 6px;
+    }
+
+    .mini-action-pill {
+      padding: 5px 10px;
+      font-size: 0.7rem;
+    }
+
+    .lightbox-img-wrap {
+      height: 270px;
     }
   }
+
+  @media only screen and (max-width: 420px) {
+    .polaroid-row {
+      gap: 5px;
+    }
+
+    .hanging-polaroid {
+      width: 58px;
+      padding: 3px 3px 6px;
+    }
+
+    .hanging-polaroid img {
+      height: 48px;
+    }
+
+    .hanging-polaroid-label {
+      font-size: 0.58rem;
+    }
+
+    .love-letter-card {
+      padding: 10px 12px;
+      border-radius: 16px;
+    }
+  }
+
+  /* 15. Hiệu ứng Cửa sổ đọng sương & Lau kính mùa đông (Foggy Frosted Glass) */
+  .foggy-glass-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1200;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    touch-action: none;
+    cursor: crosshair;
+  }
+
+  .foggy-glass-canvas.is-active {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .fog-hint-badge {
+    position: fixed;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-14px);
+    z-index: 1250;
+    background: rgba(18, 22, 42, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 209, 102, 0.85);
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(162, 210, 255, 0.4);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    text-align: center;
+    max-width: 90vw;
+  }
+
+  .fog-hint-badge.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .fog-actions-bar {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%) translateY(16px);
+    z-index: 1250;
+    display: flex;
+    gap: 10px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .fog-actions-bar.is-visible {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .fog-action-btn {
+    background: rgba(29, 29, 46, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    user-select: none;
+  }
+
+  .fog-action-btn:hover {
+    transform: scale(1.06);
+    background: rgba(230, 57, 70, 0.85);
+    border-color: #ffd166;
+  }
+
+  .fog-action-btn.close {
+    background: rgba(214, 40, 40, 0.88);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .fog-action-btn.close:hover {
+    background: #d62828;
+  }
+
+  .water-droplet-sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1210;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffffff, rgba(162, 210, 255, 0.85) 60%, rgba(255, 255, 255, 0));
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.95);
+    will-change: transform, opacity;
+  }
+
