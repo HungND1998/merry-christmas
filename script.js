@@ -155,16 +155,16 @@ function playMagicChime() {
                 y: gsap.getProperty(".pContainer", "y"),
                 scale: m()
             });
+            const pAngle = (gsap.utils.random(-180, 180) * Math.PI) / 180;
+            const pVel = gsap.utils.random(15, 35);
+            const pGrav = gsap.utils.random(10, 45);
             gsap.timeline().to(a, {
-                duration: gsap.utils.random(0.61, 6),
-                physics2D: {
-                    velocity: gsap.utils.random(-23, 23),
-                    angle: gsap.utils.random(-180, 180),
-                    gravity: gsap.utils.random(-6, 50)
-                },
+                duration: gsap.utils.random(0.8, 3.5),
+                x: "+=" + (Math.cos(pAngle) * pVel),
+                y: "+=" + (Math.sin(pAngle) * pVel + pGrav),
                 scale: 0,
                 rotation: gsap.utils.random(-123, 360),
-                ease: "power1",
+                ease: "power1.out",
                 onStart: r,
                 onStartParams: [a],
                 onRepeat: function (b) {
